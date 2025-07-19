@@ -8,29 +8,30 @@ package dev.aerodeskpro.validation;
  *
  * @author Ramindu
  */
+
 public enum Validation {
-    USERNAME() {
+    EMAIL(){
         @Override
         public String validate() {
-            return "^[a-zA-Z][a-zA-Z0-9._]{2,15}$";
+          return "^[a-zA-Z0-9_!#$%&amp;'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";  
         }
-
+    }, 
+    MOBILE(){
+        @Override
+        public String validate() {
+            return "^(0{1})(7{1})([0|1|2|4|5|6|7|8]{1})"+" "+"([0-9]{3})"+" "+"([0-9]{4})";
+        }
     },
-    EMAIL() {
+    PASSWORD(){
         @Override
         public String validate() {
-            return "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+           return "^.*(?=.{4,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$"; 
         }
-    },
-    PASSOWRD() {
-        @Override
-        public String validate() {
-            return "^[a-zA-Z]{3,}$";
-        }
-    };
- 
-
-    public String validate() {
+     };
+    public String validate(){
+        
         return "";
-    }
+        
+        }   
 }
+
