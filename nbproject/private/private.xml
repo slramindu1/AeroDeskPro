@@ -5,7 +5,13 @@
         <group>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/LoginScreen.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/Dashboard.java</file>
-            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/BaggagePanel.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/Shedular.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/PlaneRegisterForm.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/SplashScreen.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/validation/Validator.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/validation/Validation.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/GateMonitoring.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/FlightAssign.java</file>
         </group>
     </open-files>
 </project-private>
