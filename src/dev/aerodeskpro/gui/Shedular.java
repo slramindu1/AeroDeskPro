@@ -1,37 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dev.aerodeskpro.gui;
 
-import com.formdev.flatlaf.FlatLightLaf;
-import com.toedter.calendar.JDateChooser;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.Statement;
+import com.formdev.flatlaf.FlatDarkLaf;
+import dev.aerodeskpro.connection.MySQL;
+import dev.aerodeskpro.components.DateTimeDragComponent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Vector;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author ridmi
- */
 public class Shedular extends javax.swing.JFrame {
 
     public Shedular() {
@@ -39,7 +16,18 @@ public class Shedular extends javax.swing.JFrame {
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
         //    localDate();
         setTitle("Airport Admin Dashboard");
+        table1DataLoading();
+        table2DataLoading();
+
         //tableDataLoading();
+        init();
+
+    }
+
+    private void init() {
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
+        jScrollPane2.getVerticalScrollBar().setUnitIncrement(20);
+        jScrollPane3.getVerticalScrollBar().setUnitIncrement(20);
 
     }
 
@@ -51,15 +39,13 @@ public class Shedular extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtable1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        dateField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        roundedButton1 = new dev.aerodeskpro.components.RoundedButton();
+        img = new javax.swing.JLabel();
+        dateTimeDragComponent1 = new dev.aerodeskpro.components.DateTimeDragComponent();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -75,12 +61,14 @@ public class Shedular extends javax.swing.JFrame {
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtable1.setForeground(new java.awt.Color(153, 0, 0));
+        jtable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Flight", "pilot", "co-pilot", "Destination", "Scheduled Depature", "Flight No", "Time"
+                "Flight ID", "Air Plane REG.No", "Start Point", "End Point", "Start Time", "End Time", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -91,18 +79,19 @@ public class Shedular extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jtable1);
 
+        jTable2.setForeground(new java.awt.Color(0, 51, 0));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Flight", "Flight No", "Sheduled Arrival", "Status", "Time"
+                "Flight ID", "Air Plane REG.No", "Start Point", "End Point", "Start Time", "End Time", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -119,50 +108,42 @@ public class Shedular extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Arrivals");
 
-        jButton1.setText("Date Chooser");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        img.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/aerodeskpro/img/image.png"))); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dev/aerodeskpro/img/image.png"))); // NOI18N
-
-        roundedButton1.setText("Back  To Dashboard");
-        roundedButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roundedButton1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout dateTimeDragComponent1Layout = new javax.swing.GroupLayout(dateTimeDragComponent1);
+        dateTimeDragComponent1.setLayout(dateTimeDragComponent1Layout);
+        dateTimeDragComponent1Layout.setHorizontalGroup(
+            dateTimeDragComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 258, Short.MAX_VALUE)
+        );
+        dateTimeDragComponent1Layout.setVerticalGroup(
+            dateTimeDragComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 87, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(roundedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(386, 386, 386)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(268, 268, 268))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(dateTimeDragComponent1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(180, 180, 180)))
+                                .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 458, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -172,24 +153,18 @@ public class Shedular extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(110, 110, 110)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(149, 149, 149)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(60, 60, 60)
+                        .addComponent(dateTimeDragComponent1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                 .addGap(87, 87, 87)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                .addGap(58, 58, 58)
-                .addComponent(roundedButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(277, 277, 277))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(368, 368, 368))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -198,11 +173,14 @@ public class Shedular extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1471, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1443, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 954, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -215,26 +193,8 @@ public class Shedular extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//     calender.CalendarChooserExample();
-
-        CalendarButtonOpen();
-        tableDataLoading();
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void roundedButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roundedButton1ActionPerformed
-        // TODO add your handling code here:
-        new Dashboard().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_roundedButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        FlatLightLaf.setup();
+        FlatDarkLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Shedular().setVisible(true);
@@ -243,122 +203,115 @@ public class Shedular extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField dateField;
-    private javax.swing.JButton jButton1;
+    private dev.aerodeskpro.components.DateTimeDragComponent dateTimeDragComponent1;
+    private javax.swing.JLabel img;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private dev.aerodeskpro.components.RoundedButton roundedButton1;
+    private javax.swing.JTable jtable1;
     // End of variables declaration//GEN-END:variables
 
-    private void tableDataLoading() {
-        String dateText = String.valueOf(dateField.getText());
-        System.out.println(dateText);
+    private void table1DataLoading() {
         try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `flight` WHERE `action` = '1'");
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection c = DriverManager.getConnection("jdbc:mysql://localhost/flight_schedular", "root", "Dolphin#2004");
-            Statement s1 = c.createStatement();
-            Statement s2 = c.createStatement();
-            ResultSet rs1;
-            ResultSet rs2;
-            rs1 = s1.executeQuery("SELECT * FROM `arrivals` INNER JOIN `arrival_status` ON `arrival_status`.`id`=`arrivals`.`status` WHERE `scheduled_arrival`='" + dateText + "'");
-            rs2 = s2.executeQuery("SELECT * FROM `departures` WHERE `estimate_depature`='" + dateText + "'");
+            DefaultTableModel dtm = (DefaultTableModel) jtable1.getModel();
+            dtm.setRowCount(0);
 
-            if (rs1 != null) {
-                DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
-                while (rs1.next()) {
-                    Vector<String> v = new Vector<>();
-                    String result1 = String.valueOf(rs1.getInt("flight_no"));
-                    String result2 = rs1.getString("flight");
-                    String result3 = rs1.getString("scheduled_arrival");
-                    String result4 = rs1.getString("state");
-                    String result5 = rs1.getString("Time");
-                    v.add(result1);
-                    v.add(result2);
-                    v.add(result3);
-                    v.add(result4);
-                    v.add(result5);
+            while (rs.next()) {
+                Vector<String> data = new Vector<>();
+                data.add(rs.getString("flight_id"));
 
-                    dtm.addRow(v);
-
+                int airId = rs.getInt("airplane_id");
+                ResultSet rs1 = MySQL.executeSearch("SELECT * FROM `airplane` WHERE `airplane_id` = " + airId);
+                if (rs1.next()) {
+                    data.add(rs1.getString("reg_no"));
+                } else {
+                    data.add("N/A"); // or leave empty
                 }
 
-            } else {
-                System.out.println("not flight schedule");
-            }
-            if (rs2 != null) {
-                DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-                dtm.setRowCount(0);
-                while (rs2.next()) {
-                    Vector<String> v = new Vector<>();
-                    String result1 = rs2.getString("flight");
-                    String result2 = rs2.getString("pilot");
-                    String result3 = rs2.getString("pilot2");
-                    String result4 = rs2.getString("destination");
-                    String result5 = rs2.getString("estimate_depature");
-                    String result6 = String.valueOf(rs2.getInt("flight_no"));
-                    String result7 = rs2.getString("Time");
-                    v.add(result1);
-                    v.add(result2);
-                    v.add(result3);
-                    v.add(result4);
-                    v.add(result5);
-                    v.add(result6);
-                    v.add(result7);
+                data.add(rs.getString("start_point"));
 
-                    dtm.addRow(v);
+                int endPort = rs.getInt("end_airport_id");
+                ResultSet rs2 = MySQL.executeSearch("SELECT * FROM `airport` WHERE `airport_id` = " + endPort);
+                if (rs2.next()) {
+                    data.add(rs2.getString("airport_name"));
+                } else {
+                    data.add("N/A");
                 }
-            } else {
-                System.out.println("not flight schedule");
+
+                data.add(rs.getString("start_time"));
+                data.add(rs.getString("end_time"));
+
+                int statusid = rs.getInt("flight_status_id");
+                ResultSet rs3 = MySQL.executeSearch("SELECT * FROM `flight_status` WHERE `flight_status_id` = " + statusid);
+                if (rs3.next()) {
+                    data.add(rs3.getString("status"));
+                } else {
+                    data.add("N/A");
+                }
+
+                dtm.addRow(data);
             }
 
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Shedular.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log the error to console (or use proper logging)
+        } 
+    
+    }
 
+
+    private void table2DataLoading() {
+        try {
+            ResultSet rs = MySQL.executeSearch("SELECT * FROM `flight` WHERE `action` = '2'");
+
+            DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+            dtm.setRowCount(0);
+
+            while (rs.next()) {
+                Vector<String> data = new Vector<>();
+                data.add(rs.getString("flight_id"));
+
+                int airId = rs.getInt("airplane_id");
+                ResultSet rs1 = MySQL.executeSearch("SELECT * FROM `airplane` WHERE `airplane_id` = " + airId);
+                if (rs1.next()) {
+                    data.add(rs1.getString("reg_no"));
+                } else {
+                    data.add("N/A"); // or leave empty
+                }
+
+                data.add(rs.getString("start_point"));
+
+                int endPort = rs.getInt("end_airport_id");
+                ResultSet rs2 = MySQL.executeSearch("SELECT * FROM `airport` WHERE `airport_id` = " + endPort);
+                if (rs2.next()) {
+                    data.add(rs2.getString("airport_name"));
+                } else {
+                    data.add("N/A");
+                }
+
+                data.add(rs.getString("start_time"));
+                data.add(rs.getString("end_time"));
+
+                int statusid = rs.getInt("flight_status_id");
+                ResultSet rs3 = MySQL.executeSearch("SELECT * FROM `flight_status` WHERE `flight_status_id` = " + statusid);
+                if (rs3.next()) {
+                    data.add(rs3.getString("status"));
+                } else {
+                    data.add("N/A");
+                }
+
+                dtm.addRow(data);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log the error to console (or use proper logging)
         }
+
     }
-
-    private void CalendarButtonOpen() {
-        JDialog dialog = new JDialog(this, "Choose Date", true); // Modal dialog
-        dialog.setSize(300, 200);
-        dialog.setLayout(null);
-        dialog.setLocationRelativeTo(this); // Center on parent
-
-        JLabel label = new JLabel("Select Date:");
-        label.setBounds(20, 20, 100, 25);
-        dialog.add(label);
-
-        JDateChooser dateChooser = new JDateChooser();
-        dateChooser.setDateFormatString("yyyy-MM-dd");
-        dateChooser.setBounds(120, 20, 140, 25);
-        dialog.add(dateChooser);
-
-        JButton selectBtn = new JButton("OK");
-        selectBtn.setBounds(90, 70, 100, 30);
-        dialog.add(selectBtn);
-
-        selectBtn.addActionListener(e -> {
-            Date selectedDate = dateChooser.getDate();
-            if (selectedDate != null) {
-                String dateStr = new SimpleDateFormat("yyyy-MM-dd").format(selectedDate);
-                dateField.setText(dateStr); // ← this updates the field in main form
-                dialog.dispose();
-
-            } else {
-                JOptionPane.showMessageDialog(dialog, "Please select a date.");
-            }
-        });
-
-        dialog.setVisible(true);
-    }
-
 }

@@ -8,10 +8,14 @@
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/Shedular.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/PlaneRegisterForm.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/SplashScreen.java</file>
-            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/validation/Validator.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/validation/Validation.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/GateMonitoring.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/FlightAssign.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/database/GateDAO.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/models/Gate.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/database/DBConnection.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/PilotRegistration.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/components/CustomDatePicker.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,7 +5,16 @@
 package dev.aerodeskpro.gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import static javax.swing.SwingConstants.CENTER;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -21,6 +30,55 @@ public class Dashboard extends javax.swing.JFrame {
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Airport Admin Dashboard");
+
+        JTableHeader header = jTable1.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        header.setBackground(new Color(65, 65, 200)); // light green
+        header.setForeground(Color.WHITE);
+        header.setPreferredSize(new Dimension(header.getWidth(), 35));
+
+// Set Row Height and Grid
+        jTable1.setRowHeight(32);
+        jTable1.setShowGrid(false);
+        jTable1.setIntercellSpacing(new Dimension(0, 0));
+
+// Remove borders
+        jTable1.setBorder(null);
+        ((JScrollPane) jTable1.getParent().getParent()).setBorder(null);
+
+// Font for cells
+        jTable1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        jTable1.setForeground(Color.BLACK);
+
+// Set cell renderer for alternating row colors
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (!isSelected) {
+                    if (row % 2 == 0) {
+                        c.setBackground(Color.WHITE);
+                    } else {
+                        c.setBackground(new Color(245, 245, 245)); // light gray
+                    }
+                    c.setForeground(Color.BLACK);
+                } else {
+                    c.setBackground(new Color(0, 120, 215));
+                    c.setForeground(Color.WHITE);
+                }
+
+                setHorizontalAlignment(CENTER); // Center align all cells
+                return c;
+            }
+        };
+
+// Apply to all columns
+        for (int i = 0; i < jTable1.getColumnCount(); i++) {
+            jTable1.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
     }
 
     /**
@@ -41,9 +99,9 @@ public class Dashboard extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -103,10 +161,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(51, 51, 255));
-        jButton7.setText("Settings");
-
         jButton8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
         jButton8.setForeground(new java.awt.Color(51, 51, 255));
         jButton8.setText("Exit");
@@ -115,6 +169,10 @@ public class Dashboard extends javax.swing.JFrame {
         jButton9.setForeground(new java.awt.Color(51, 51, 255));
         jButton9.setText("Flight Status");
 
+        jButton10.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(51, 51, 255));
+        jButton10.setText("Pilot Registration");
+
         javax.swing.GroupLayout SidePanelLayout = new javax.swing.GroupLayout(SidePanel);
         SidePanel.setLayout(SidePanelLayout);
         SidePanelLayout.setHorizontalGroup(
@@ -122,14 +180,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(SidePanelLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(SidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         SidePanelLayout.setVerticalGroup(
@@ -147,15 +205,15 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jButton6)
                 .addGap(26, 26, 26)
                 .addComponent(jButton9)
-                .addGap(18, 18, 18)
-                .addComponent(jButton7)
+                .addGap(27, 27, 27)
+                .addComponent(jButton10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton8)
                 .addGap(15, 15, 15))
         );
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
-        mainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        mainPanel.setLayout(new java.awt.BorderLayout());
 
         jTable1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -201,7 +259,7 @@ public class Dashboard extends javax.swing.JFrame {
         jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTable1);
 
-        mainPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 920, 230));
+        mainPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jTable2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -246,16 +304,16 @@ public class Dashboard extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        mainPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 920, 250));
+        mainPanel.add(jScrollPane2, java.awt.BorderLayout.PAGE_START);
 
         jButton1.setText("Refresh");
-        mainPanel.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, -1, -1));
+        mainPanel.add(jButton1, java.awt.BorderLayout.PAGE_END);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1191, Short.MAX_VALUE)
+            .addComponent(TopPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(SidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -310,12 +368,12 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel SidePanel;
     private javax.swing.JPanel TopPanel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;

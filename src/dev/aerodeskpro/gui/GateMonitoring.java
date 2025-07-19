@@ -17,6 +17,15 @@ import javax.swing.JViewport;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import dev.aerodeskpro.database.DBConnection;
+
+import java.sql.Connection;
+import dev.aerodeskpro.database.GateDAO;
+import dev.aerodeskpro.models.Gate;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,14 +38,10 @@ public class GateMonitoring extends javax.swing.JFrame {
      */
     public GateMonitoring() {
         initComponents();
-
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         styleTable(jTable1);
-    }
+        loadGateData(); // Load data when form opens
 
-// Method to apply common styling to a JTable
-    private void styleTable(JTable table) {
         // Set Header Style
         JTableHeader header = jTable1.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -57,7 +62,40 @@ public class GateMonitoring extends javax.swing.JFrame {
         jTable1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         jTable1.setForeground(Color.BLACK);
 
-// Set cell renderer for alternating row colors
+    }
+
+    private void loadGateData() {
+        try (Connection conn = DBConnection.getConnection()) {
+            GateDAO gateDAO = new GateDAO(conn);
+            List<Gate> gates = gateDAO.getAllGates();
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Clear existing data
+
+            for (Gate gate : gates) {
+                Object[] row = {
+                    gate.getGateNumber(),
+                    gate.getTerminal(),
+                    gate.getStatus(),
+                    gate.getCurrentFlightId() == 0 ? "N/A" : "FL-" + gate.getCurrentFlightId(),
+                    gate.getNextFlightId() == 0 ? "N/A" : "FL-" + gate.getNextFlightId(),
+                    gate.isAvailable() ? "Available" : "Unavailable"
+                };
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Database Error: " + e.getMessage(),
+                    "Connection Failed",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void styleTable(JTable table) {
+        // Existing header styling...
+
+        // Set cell renderer with status colors
         DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -65,28 +103,47 @@ public class GateMonitoring extends javax.swing.JFrame {
 
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
+                // Get the status from column 2 (Status column)
+                String status = table.getModel().getValueAt(row, 2).toString();
+
                 if (!isSelected) {
+                    // Base background color (alternating rows)
                     if (row % 2 == 0) {
                         c.setBackground(Color.WHITE);
                     } else {
-                        c.setBackground(new Color(245, 245, 245)); // light gray
+                        c.setBackground(new Color(245, 245, 245));
                     }
+
+                    // Status-specific coloring
+                    switch (status) {
+                        case "Occupied":
+                            c.setBackground(new Color(255, 200, 200)); // Light red
+                            break;
+                        case "Maintenance":
+                            c.setBackground(new Color(255, 255, 200)); // Light yellow
+                            break;
+                        case "Closed":
+                            c.setBackground(new Color(220, 220, 220)); // Gray
+                            break;
+                    }
+
                     c.setForeground(Color.BLACK);
                 } else {
                     c.setBackground(new Color(0, 120, 215));
                     c.setForeground(Color.WHITE);
                 }
 
-                setHorizontalAlignment(CENTER); // Center align all cells
+                setHorizontalAlignment(CENTER);
                 return c;
             }
         };
 
-// Apply to all columns
-        for (int i = 0; i < jTable1.getColumnCount(); i++) {
-            jTable1.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        // Apply to all columns
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
         }
     }
+// Method to apply common styling to a JTable
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,7 +173,7 @@ public class GateMonitoring extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Gate ID", "Gate Number", "Terminal", "Availability"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
