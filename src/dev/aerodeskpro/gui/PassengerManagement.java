@@ -1,4 +1,3 @@
-
 package dev.aerodeskpro.gui;
 
 import com.formdev.flatlaf.FlatLightLaf;
@@ -18,18 +17,16 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-
 public class PassengerManagement extends javax.swing.JFrame {
 
-    
     public PassengerManagement() {
         initComponents();
         init();
     }
-    
-    public void init(){
+
+    public void init() {
         loadPassengerData();
-                // Set Header Style
+        // Set Header Style
         JTableHeader header = passengerTable.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         header.setBackground(new Color(65, 65, 200)); // light green
@@ -80,11 +77,13 @@ public class PassengerManagement extends javax.swing.JFrame {
         }
     }
 
-    public void loadPassengerData(){
+    public void loadPassengerData() {
         try {
             // Improved SQL query with proper column aliases
-            String sql = "SELECT * FROM `flight_has_passenger`"
-                    + "INNER JOIN passenger ON flight_has_passenger.passenger_id = passenger.passenger_id";
+            String sql = "SELECT * \n"
+                    + "FROM flight_has_passenger \n"
+                    + "JOIN passenger \n"
+                    + "ON flight_has_passenger.passport_number = passenger.passport_number;";
 
             ResultSet rs = MySQL.execute(sql);
             DefaultTableModel dtm = (DefaultTableModel) passengerTable.getModel();
@@ -93,9 +92,9 @@ public class PassengerManagement extends javax.swing.JFrame {
             while (rs.next()) {
                 Vector<String> data = new Vector<>();
                 data.add(rs.getString("passport_number"));
-                data.add(rs.getString("first_name")+" "+rs.getString("last_name"));
+                data.add(rs.getString("first_name") + " " + rs.getString("last_name"));
                 data.add(rs.getString("email"));
-                data.add(rs.getString("mobile")); 
+                data.add(rs.getString("mobile"));
                 dtm.addRow(data);
             }
 
@@ -105,6 +104,7 @@ public class PassengerManagement extends javax.swing.JFrame {
                     "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,6 +121,7 @@ public class PassengerManagement extends javax.swing.JFrame {
         searchPassengerInput = new javax.swing.JTextField();
         addBtnPassenger = new dev.aerodeskpro.components.PrimaryBtn();
         editBtnPassenger = new dev.aerodeskpro.components.SeconderyBtn();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manage Passengers");
@@ -192,11 +193,20 @@ public class PassengerManagement extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setText("Back To Dashboard");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(scrollPane)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(addBtnPassenger, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
@@ -205,7 +215,9 @@ public class PassengerManagement extends javax.swing.JFrame {
                 .addGap(365, 365, 365)
                 .addComponent(searchPassengerInput, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +229,10 @@ public class PassengerManagement extends javax.swing.JFrame {
                     .addComponent(editBtnPassenger, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(searchPassengerInput, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -225,17 +240,17 @@ public class PassengerManagement extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchPassengerInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchPassengerInputActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_searchPassengerInputActionPerformed
 
     private void addBtnPassengerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnPassengerActionPerformed
-        AddPassengers addPssengers=new AddPassengers(this, rootPaneCheckingEnabled);
+        AddPassengers addPssengers = new AddPassengers(this, rootPaneCheckingEnabled);
         addPssengers.setLocationRelativeTo(this);
         addPssengers.setVisible(true);
     }//GEN-LAST:event_addBtnPassengerActionPerformed
 
     private void editBtnPassengerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnPassengerActionPerformed
-        UpdatePassengers updatePassengers=new UpdatePassengers(this, rootPaneCheckingEnabled);
+        UpdatePassengers updatePassengers = new UpdatePassengers(this, rootPaneCheckingEnabled);
         updatePassengers.setLocationRelativeTo(this);
         updatePassengers.setVisible(true);
     }//GEN-LAST:event_editBtnPassengerActionPerformed
@@ -243,6 +258,12 @@ public class PassengerManagement extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.setExtendedState(MAXIMIZED_BOTH);
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new Dashboard().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,6 +281,7 @@ public class PassengerManagement extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private dev.aerodeskpro.components.PrimaryBtn addBtnPassenger;
     private dev.aerodeskpro.components.SeconderyBtn editBtnPassenger;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel passengerMangLabel;
     private javax.swing.JTable passengerTable;
