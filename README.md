@@ -23,6 +23,7 @@ This project was collaboratively developed by the following team members:
 - **Subashi Nanduththara**
 - **Hansa Disanayaka**
 - **Lithula Levmitha Silva**
+- **Pragathi Kumari**
 
 ---
 
