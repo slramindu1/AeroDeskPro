@@ -1,4 +1,4 @@
-package lk.tchk.component;
+package dev.aerodeskpro.components;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package lk.tchk.component;
+package dev.aerodeskpro.components;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +14,7 @@ public class SeconderyBtn extends JButton {
         setFocusPainted(false);
         setBorderPainted(false);
         setForeground(new Color(0, 30, 108)); // default text color
+        setFont(new Font("SansSerif", Font.BOLD, 14));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         addMouseListener(new MouseAdapter() {

@@ -4,7 +4,6 @@
  */
 package dev.aerodeskpro.connection;
 
-
 import java.sql.Connection;
 
 import java.sql.DriverManager;
@@ -12,7 +11,8 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-import java.sql.SQLException; 
+import java.sql.SQLException;
+
 public class MySQL {
 
     private static final String DATABASE = "aerodeskpro";
@@ -43,15 +43,14 @@ public class MySQL {
     }
 
     public static ResultSet execute(String query) throws SQLException {
-        Statement smt;
-        if (query.startsWith("SELECT")) {
-            smt = connection.createStatement();
-            ResultSet rs = smt.executeQuery(query);
-            return rs;
+        Statement smt = connection.createStatement();
+
+        if (query.trim().toUpperCase().startsWith("SELECT")) {
+            return smt.executeQuery(query); // ✅ For SELECT queries
         } else {
-            smt = connection.createStatement();
-            smt.executeQuery(query);
+            smt.executeUpdate(query);       // ✅ For INSERT, UPDATE, DELETE
             return null;
         }
     }
+
 }

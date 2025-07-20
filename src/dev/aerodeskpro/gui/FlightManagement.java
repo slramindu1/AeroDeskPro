@@ -72,15 +72,15 @@ public class FlightManagement extends javax.swing.JFrame {
         scrollPane = new javax.swing.JScrollPane();
         flightTable = new javax.swing.JTable();
         addBtnFlight = new javax.swing.JPanel();
-        primaryBtn1 = new lk.tchk.component.PrimaryBtn();
-        seconderyBtn1 = new lk.tchk.component.SeconderyBtn();
-        SearchField = new lk.tchk.component.inputField();
+        primaryBtn1 = new dev.aerodeskpro.components.PrimaryBtn();
+        seconderyBtn1 = new dev.aerodeskpro.components.SeconderyBtn();
+        SearchField = new dev.aerodeskpro.components.inputField();
         addBtnFlight1 = new javax.swing.JPanel();
-        roundPanel1 = new lk.tchk.component.RoundPanel();
+        roundPanel1 = new dev.aerodeskpro.components.RoundPanel();
         jLabel1 = new javax.swing.JLabel();
-        AddBtn = new lk.tchk.component.PrimaryBtn();
-        seconderyBtn2 = new lk.tchk.component.SeconderyBtn();
-        SearchField1 = new lk.tchk.component.inputField();
+        AddBtn = new dev.aerodeskpro.components.PrimaryBtn();
+        seconderyBtn2 = new dev.aerodeskpro.components.SeconderyBtn();
+        SearchField1 = new dev.aerodeskpro.components.inputField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Flight Management");
@@ -291,17 +291,17 @@ public class FlightManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private lk.tchk.component.PrimaryBtn AddBtn;
-    private lk.tchk.component.inputField SearchField;
-    private lk.tchk.component.inputField SearchField1;
+    private dev.aerodeskpro.components.PrimaryBtn AddBtn;
+    private dev.aerodeskpro.components.inputField SearchField;
+    private dev.aerodeskpro.components.inputField SearchField1;
     private javax.swing.JPanel addBtnFlight;
     private javax.swing.JPanel addBtnFlight1;
     private javax.swing.JTable flightTable;
     private javax.swing.JLabel jLabel1;
-    private lk.tchk.component.PrimaryBtn primaryBtn1;
-    private lk.tchk.component.RoundPanel roundPanel1;
+    private dev.aerodeskpro.components.PrimaryBtn primaryBtn1;
+    private dev.aerodeskpro.components.RoundPanel roundPanel1;
     private javax.swing.JScrollPane scrollPane;
-    private lk.tchk.component.SeconderyBtn seconderyBtn1;
-    private lk.tchk.component.SeconderyBtn seconderyBtn2;
+    private dev.aerodeskpro.components.SeconderyBtn seconderyBtn1;
+    private dev.aerodeskpro.components.SeconderyBtn seconderyBtn2;
     // End of variables declaration//GEN-END:variables
 }

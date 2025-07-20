@@ -5,17 +5,24 @@
         <group>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/LoginScreen.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/Dashboard.java</file>
-            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/Shedular.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/PlaneRegisterForm.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/SplashScreen.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/validation/Validation.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/GateMonitoring.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/FlightAssign.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/database/GateDAO.java</file>
-            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/models/Gate.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/database/DBConnection.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/PilotRegistration.java</file>
             <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/components/CustomDatePicker.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/connection/MySQL.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/components/DateTimeDragComponent.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/Shedular.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/PassengerChecking.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/BaggageCheking.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/validation/Validator.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/FlightManagement.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/HtmlViewer.java</file>
+            <file>file:/F:/Java_Projects/AeroDeskPro/src/dev/aerodeskpro/gui/HtmlWithWebView.java</file>
         </group>
     </open-files>
 </project-private>
